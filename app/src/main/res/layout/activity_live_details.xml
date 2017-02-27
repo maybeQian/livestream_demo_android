@@ -68,29 +68,29 @@
              android:layout_alignParentRight="true"
              android:layout_alignParentBottom="true"
              android:background="@drawable/live_selecter_room_close_button" />-->
-        <com.easemob.livedemo.ui.widget.RoomMessagesView
+        <cn.ucai.live.ui.widget.RoomMessagesView
             android:id="@+id/message_view"
             android:layout_width="match_parent"
             android:layout_height="170dp"
             android:layout_alignParentBottom="true"
             android:visibility="invisible" />
 
-        <com.easemob.livedemo.ui.widget.BarrageLayout
+        <cn.ucai.live.ui.widget.BarrageLayout
             android:id="@+id/barrage_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/message_view"
             android:layout_marginBottom="10dp" />
 
-        <com.easemob.livedemo.ui.widget.PeriscopeLayout
+        <cn.ucai.live.ui.widget.PeriscopeLayout
             android:id="@+id/periscope_layout"
             android:layout_width="150dp"
             android:layout_height="190dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="42dp"></com.easemob.livedemo.ui.widget.PeriscopeLayout>
+            android:layout_marginBottom="42dp"></cn.ucai.live.ui.widget.PeriscopeLayout>
 
-        <com.easemob.livedemo.ui.widget.LiveLeftGiftView
+        <cn.ucai.live.ui.widget.LiveLeftGiftView
             android:id="@+id/left_gift_view1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
             android:layout_marginBottom="4dp"
             android:visibility="invisible" />
 
-        <com.easemob.livedemo.ui.widget.LiveLeftGiftView
+        <cn.ucai.live.ui.widget.LiveLeftGiftView
             android:id="@+id/left_gift_view2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
