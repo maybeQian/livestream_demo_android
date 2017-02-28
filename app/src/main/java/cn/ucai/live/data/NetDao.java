@@ -73,4 +73,11 @@ public class NetDao {
 
     }
 
+    public static void getAllLiveRoom(Context context, OnCompleteListener<String> listener) {
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_GET_ALL_CHATROOM)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+
 }
