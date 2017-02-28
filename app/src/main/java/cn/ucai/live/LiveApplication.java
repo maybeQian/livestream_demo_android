@@ -15,6 +15,8 @@ public class LiveApplication extends Application{
   @Override public void onCreate() {
     super.onCreate();
     instance = this;
+    //init demo helper
+    LiveHelper.getInstance().init(instance);
     EaseUI.getInstance().init(this, null);
     UEasyStreaming.initStreaming("publish3-key");
   }
