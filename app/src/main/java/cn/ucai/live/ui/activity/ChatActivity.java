@@ -12,7 +12,7 @@ public class ChatActivity extends BaseActivity{
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_chat);
 
-    String username = getIntent().getStringExtra("username");
+    String username = getIntent().getStringExtra("metUsername");
 
     getSupportFragmentManager().beginTransaction().add(R.id.root, ChatFragment.newInstance(username, true)).commit();
   }

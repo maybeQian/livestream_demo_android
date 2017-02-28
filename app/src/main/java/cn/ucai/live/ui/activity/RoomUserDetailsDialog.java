@@ -34,7 +34,7 @@ public class RoomUserDetailsDialog extends DialogFragment {
   public static RoomUserDetailsDialog newInstance(String username) {
     RoomUserDetailsDialog dialog = new RoomUserDetailsDialog();
     Bundle args = new Bundle();
-    args.putString("username", username);
+    args.putString("metUsername", username);
     dialog.setArguments(args);
     return dialog;
   }
@@ -49,7 +49,7 @@ public class RoomUserDetailsDialog extends DialogFragment {
   @Override public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     if (getArguments() != null) {
-      username = getArguments().getString("username");
+      username = getArguments().getString("metUsername");
     }
     if (username != null) {
       usernameView.setText(username);

@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class ChatFragment extends Fragment implements EMMessageListener {
 
-  private static final String ARG_USERNAME = "username";
+  private static final String ARG_USERNAME = "metUsername";
   private static final String ARG_IS_NORMAL = "isNormalStyle";
 
   boolean isNormalStyle;

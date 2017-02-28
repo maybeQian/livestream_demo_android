@@ -95,7 +95,7 @@ public class ConversationListFragment extends Fragment implements EMMessageListe
           ChatFragment chatFragment = ChatFragment.newInstance(conversationList.get(position).getUserName(), isNormalStyle);
           getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.message_container, chatFragment).addToBackStack(null).commit();
         } else {
-          startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("username", conversationList.get(position).getUserName()));
+          startActivity(new Intent(getActivity(), ChatActivity.class).putExtra("metUsername", conversationList.get(position).getUserName()));
         }
       }
     });
