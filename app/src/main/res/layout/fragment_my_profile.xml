@@ -18,6 +18,7 @@
       android:paddingBottom="20dp"
       >
     <com.hyphenate.easeui.widget.EaseImageView
+        android:id="@+id/iv_avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="20dp"
