@@ -217,7 +217,7 @@ public interface I {
 	String REQUEST_GIVING_GIFT                      =       "live/givingGifts";
 	String REQUEST_RECHARGE                         =       "live/recharge";
 	String REQUEST_GET_ALL_CHATROOM                 =       "live/getAllChatRoom";
-
+	String REQUEST_CREATE_LIVE                      =       "live/createChatRoom";
 
 	int REQUESTCODE_PICK = 1;
 	int REQUESTCODE_CUTTING = 2;
