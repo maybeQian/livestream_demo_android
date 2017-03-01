@@ -33,6 +33,7 @@ import com.ucloud.live.UEasyStreaming;
 import com.ucloud.live.UStreamingProfile;
 import com.ucloud.live.widget.UAspectFrameLayout;
 
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 import java.util.Random;
 
@@ -112,6 +113,18 @@ public class StartLiveActivity extends LiveBaseActivity
 
         EaseUserUtils.setAppUserAvatar(this,EMClient.getInstance().getCurrentUser(),userAvatar);
         EaseUserUtils.setAppUserNick(EMClient.getInstance().getCurrentUser(),usernameView);
+
+        String id = getIntent().getStringExtra("liveId");
+        if (id != null && !liveId.equals("")) {
+            L.e(TAG, "getIntent,id=" + id);
+            liveId = id;
+            chatroomId = id;
+        } else {
+            pd = new ProgressDialog(this);
+            pd.setMessage("开始直播...");
+            pd.show();
+            createLiveRoom();
+        }
 //        liveId = TestDataRepository.getLiveRoomId(EMClient.getInstance().getCurrentUser());
 //        chatroomId = TestDataRepository.getChatRoomId(EMClient.getInstance().getCurrentUser());
 //        anchorId = EMClient.getInstance().getCurrentUser();
@@ -201,13 +214,12 @@ public class StartLiveActivity extends LiveBaseActivity
      */
     @OnClick(R.id.btn_start)
     void startLive() {
-        pd = new ProgressDialog(this);
-        pd.setMessage("开始直播...");
-        pd.show();
-        createLiveRoom();
-        if (liveId == null) {
+        if (liveId == null || liveId.equals("")) {
+            CommonUtils.showShortToast("获取直播数据失败");
+            L.e(TAG,"id is null");
             return;
         }
+        startLiveByChatRoom();
     }
 
     private void createLiveRoom() {
@@ -216,16 +228,18 @@ public class StartLiveActivity extends LiveBaseActivity
             NetDao.createLive(this, user, new OnCompleteListener<String>() {
                 @Override
                 public void onSuccess(String s) {
+                    L.e("startLive","s="+s);
                     boolean success = false;
                     pd.dismiss();
                     if (s != null) {
-                        List<String> ids = ResultUtils.getEMResultFromJson(s, String.class);
-                        if (ids != null && ids.size() > 0) {
+                        String id = ResultUtils.getEMResultFromJson(s);
+                        if (id != null) {
                             success=true;
-                            L.e("startLive","ids="+ids.get(0));
-                            initLive(ids.get(0));
-                            startLiveByChatRoom();
+                            L.e("startLive","id="+id);
+                            initLive(id);
+//                            startLiveByChatRoom();
                         }
+
                     }
                     if (!success) {
                         CommonUtils.showShortToast("创建直播失败");

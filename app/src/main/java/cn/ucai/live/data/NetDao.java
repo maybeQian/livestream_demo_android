@@ -85,8 +85,8 @@ public class NetDao {
         OkHttpUtils<String> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_CREATE_LIVE)
                 .addParam("auth","1IFgE")
-                .addParam("name",user.getMUserNick()+"的直播室")
-                .addParam("description",user.getMUserNick()+"的直播室")
+                .addParam("name",user.getMUserNick()+"的直播")
+                .addParam("description",user.getMUserNick()+"的直播")
                 .addParam("owner",user.getMUserName())
                 .addParam("maxusers","300")
                 .addParam("members",user.getMUserName())
