@@ -16,6 +16,7 @@ import java.util.Map;
 
 import cn.ucai.live.LiveApplication;
 import cn.ucai.live.LiveConstants;
+import cn.ucai.live.data.model.Gift;
 
 
 public class LiveDBManager {
@@ -57,7 +58,7 @@ public class LiveDBManager {
     synchronized public void saveAppContactList(List<User> contactList) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (db.isOpen()) {
-            db.delete(UserDao.TABLE_NAME, null, null);
+            db.delete(UserDao.User_TABLE_NAME, null, null);
             for (User user : contactList) {
                 ContentValues values = new ContentValues();
                 values.put(UserDao.User_COLUMN_NAME, user.getMUserName());
@@ -77,6 +78,8 @@ public class LiveDBManager {
             }
         }
     }
+
+
 
     /**
      * get contact list
@@ -128,6 +131,51 @@ public class LiveDBManager {
             cursor.close();
         }
         return users;
+    }
+
+    /**
+     * save gift list
+     * @param giftList
+     */
+    synchronized public void saveAppGiftList(List<Gift> giftList) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        if (db.isOpen()) {
+            db.delete(UserDao.GIFT_TABLE_NAME, null, null);
+            for (Gift gift:giftList) {
+                ContentValues values = new ContentValues();
+                if(gift.getId() != null)
+                    values.put(UserDao.GIFT_COLUMN_ID, gift.getId());
+                if(gift.getGname() != null)
+                    values.put(UserDao.GIFT_COLUMN_NAME, gift.getGname());
+                if(gift.getGurl()!= null)
+                    values.put(UserDao.GIFT_COLUMN_URL, gift.getGurl());
+                if(gift.getGprice() != null)
+                    values.put(UserDao.GIFT_COLUMN_PRICE, gift.getGprice());
+                db.replace(UserDao.GIFT_TABLE_NAME, null, values);
+            }
+        }
+    }
+
+    /**
+     * get gift list
+     * @return
+     */
+    synchronized public Map<Integer, Gift> getAppGiftList() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Map<Integer, Gift> gifts = new Hashtable<Integer, Gift>();
+        if (db.isOpen()) {
+            Cursor cursor = db.rawQuery("select * from " + UserDao.GIFT_TABLE_NAME /* + " desc" */, null);
+            while (cursor.moveToNext()) {
+                Gift gift=new Gift();
+                gift.setId(cursor.getInt(cursor.getColumnIndex(UserDao.GIFT_COLUMN_ID)));
+                gift.setGname(cursor.getString(cursor.getColumnIndex(UserDao.GIFT_COLUMN_NAME)));
+                gift.setGurl(cursor.getString(cursor.getColumnIndex(UserDao.GIFT_COLUMN_URL)));
+                gift.setGprice(cursor.getInt(cursor.getColumnIndex(UserDao.GIFT_COLUMN_PRICE)));
+                gifts.put(gift.getId(), gift);
+            }
+            cursor.close();
+        }
+        return gifts;
     }
 
     /**

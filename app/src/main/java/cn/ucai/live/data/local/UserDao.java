@@ -21,6 +21,8 @@ import com.hyphenate.easeui.domain.User;
 import java.util.List;
 import java.util.Map;
 
+import cn.ucai.live.data.model.Gift;
+
 
 public class UserDao {
     public static final String TABLE_NAME = "uers";
@@ -43,6 +45,12 @@ public class UserDao {
     public static final String User_COLUMN_NAME_AVATAR_TYPE = "m_avatar_type";
     public static final String User_COLUMN_NAME_AVATAR_UPDATE_TIME = "m_avatar_last_update_time";
 
+    public static final String GIFT_TABLE_NAME = "t_superwechat_gift";
+    public static final String GIFT_COLUMN_ID = "m_gift_id";
+    public static final String GIFT_COLUMN_NAME = "m_gift_name";
+    public static final String GIFT_COLUMN_URL = "m_gift_url";
+    public static final String GIFT_COLUMN_PRICE = "m_gift_price";
+
 
 
     public UserDao(Context context) {
@@ -61,6 +69,10 @@ public class UserDao {
         LiveDBManager.getInstance().saveAppContactList(contactList);
     }
 
+    public void saveAppGiftList(List<Gift> giftList) {
+        LiveDBManager.getInstance().saveAppGiftList(giftList);
+    }
+
     /**
      * get contact list
      *
@@ -74,6 +86,12 @@ public class UserDao {
     public Map<String, User> getAppContactList() {
 
         return LiveDBManager.getInstance().getAppContactList();
+    }
+
+
+    public Map<Integer, Gift> getAppGiftList() {
+
+        return LiveDBManager.getInstance().getAppGiftList();
     }
 
     /**

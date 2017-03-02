@@ -51,10 +51,12 @@ import java.util.UUID;
 import cn.ucai.live.data.NetDao;
 import cn.ucai.live.data.local.LiveDBManager;
 import cn.ucai.live.data.local.UserDao;
+import cn.ucai.live.data.model.Gift;
 import cn.ucai.live.data.model.Result;
 import cn.ucai.live.ui.activity.ChatActivity;
 import cn.ucai.live.ui.activity.LoginActivity;
 import cn.ucai.live.ui.activity.MainActivity;
+import cn.ucai.live.utils.CommonUtils;
 import cn.ucai.live.utils.L;
 import cn.ucai.live.utils.OnCompleteListener;
 import cn.ucai.live.utils.PreferenceManager;
@@ -86,6 +88,8 @@ public class LiveHelper {
 	private Map<String, EaseUser> contactList;
 
 	private Map<String, User> appContactList;
+
+	private Map<Integer,Gift> appGiftList;
 
 
 	private static LiveHelper instance = null;
@@ -167,11 +171,45 @@ public class LiveHelper {
             setGlobalListeners();
 			broadcastManager = LocalBroadcastManager.getInstance(appContext);
 	        initDbDao();
+
+            initGiftList();
 		}
 	}
 
+    private void initGiftList() {
+        NetDao.loadAllGifts(appContext, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String s) {
+                boolean success=false;
+                if (s != null) {
+                    Result result = ResultUtils.getListResultFromJson(s, Gift.class);
+                    if (result != null && result.isRetMsg()) {
+                        List<Gift> list= (List<Gift>) result.getRetData();
+                        if (list != null && list.size() > 0) {
+                            success=true;
+                            Map<Integer, Gift> map = new HashMap<Integer, Gift>();
+                            for (Gift gift : list) {
+                                map.put(gift.getId(), gift);
+                            }
+                            LiveHelper.getInstance().setAppGiftList(map);
+                            userDao.saveAppGiftList(list);
+                        }
+                    }
+                }
+                if (!success) {
+                    L.e(TAG,"initGiftList fail");
+                }
+            }
 
-	private EMOptions initChatOptions(){
+            @Override
+            public void onError(String error) {
+                L.e(TAG,"initGiftList fail,error="+error);
+            }
+        });
+    }
+
+
+    private EMOptions initChatOptions(){
         Log.d(TAG, "init HuanXin Options");
 
         EMOptions options = new EMOptions();
@@ -723,6 +761,21 @@ public class LiveHelper {
 		appContactList = aContactList;
 	}
 
+    /**
+     *set gift list
+     * @param list
+     */
+	public void setAppGiftList(Map<Integer,Gift> list) {
+		if(list == null){
+		    if (appGiftList != null) {
+                appGiftList.clear();
+		    }
+			return;
+		}
+
+        appGiftList = list;
+	}
+
 	/**
      * save single contact
      */
@@ -747,6 +800,24 @@ public class LiveHelper {
         }
 
         return appContactList;
+    }
+
+    /**
+     * get gift list
+     *
+     * @return
+     */
+    public Map<Integer,Gift> getAppGiftList() {
+        if (appGiftList == null || appGiftList.size()==0) {
+            appGiftList = LiveModel.getAppGiftList();
+        }
+
+        // return a empty non-null object to avoid app crash
+        if(appGiftList == null){
+        	return new Hashtable<Integer, Gift>();
+        }
+
+        return appGiftList;
     }
 
     /**

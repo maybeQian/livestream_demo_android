@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.ucai.live.data.local.UserDao;
+import cn.ucai.live.data.model.Gift;
 import cn.ucai.live.utils.PreferenceManager;
 
 public class LiveModel {
@@ -300,6 +301,17 @@ public class LiveModel {
     public Map<String, User> getAppContactList() {
         UserDao dao = new UserDao(context);
         return dao.getAppContactList();
+    }
+
+    public boolean saveAppGiftList(List<Gift> giftList) {
+        UserDao dao = new UserDao(context);
+        dao.saveAppGiftList(giftList);
+        return true;
+    }
+
+    public Map<Integer,Gift> getAppGiftList() {
+        UserDao dao = new UserDao(context);
+        return dao.getAppGiftList();
     }
 
     public void saveAppContact(User user){

@@ -119,7 +119,7 @@ public class StartLiveActivity extends LiveBaseActivity
         EaseUserUtils.setAppUserNick(EMClient.getInstance().getCurrentUser(),usernameView);
 
         LiveRoom liveRoom = getIntent().getParcelableExtra("liveRoom");
-        if (liveRoom.getId() != null && !liveRoom.getId().equals("")) {
+        if (liveRoom != null ) {
             L.e(TAG,"getIntent,liveId="+liveRoom.getId()+",chatroomId="+liveRoom.getChatroomId());
             liveId = liveRoom.getId();
             chatroomId = liveRoom.getChatroomId();
@@ -170,6 +170,7 @@ public class StartLiveActivity extends LiveBaseActivity
                 Toast.makeText(this, event.toString(), Toast.LENGTH_LONG).show();
                 break;
             case UEasyStreaming.State.START_RECORDING:
+                startTime=System.currentTimeMillis();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -216,7 +217,6 @@ public class StartLiveActivity extends LiveBaseActivity
      */
     @OnClick(R.id.btn_start)
     void startLive() {
-        startTime=System.currentTimeMillis();
         if (chatroomId == null || chatroomId.equals("")) {
             pd = new ProgressDialog(this);
             pd.setMessage("创建直播...");
@@ -334,7 +334,7 @@ public class StartLiveActivity extends LiveBaseActivity
     private void showConfirmCloseLayout() {
         //显示封面
         coverImage.setVisibility(View.VISIBLE);
-//        EaseUserUtils.setAppUserAvatar(this,EMClient.getInstance().getCurrentUser(),coverImage);
+        EaseUserUtils.setAppUserAvatar(StartLiveActivity.this,EMClient.getInstance().getCurrentUser(),coverImage);
 //        List<LiveRoom> liveRoomList = TestDataRepository.getLiveRoomList();
 //        for (LiveRoom liveRoom : liveRoomList) {
 //            if (liveRoom.getId().equals(liveId)) {
@@ -346,7 +346,7 @@ public class StartLiveActivity extends LiveBaseActivity
         TextView usernameView = (TextView) view.findViewById(R.id.finish_tv_username);
         EaseImageView userAvatar = (EaseImageView) view.findViewById(R.id.finish_eiv_avatar);
         TextView tvShowTime = (TextView) view.findViewById(R.id.show_time);
-        EaseUserUtils.setAppUserAvatar(this,EMClient.getInstance().getCurrentUser(),userAvatar);
+        EaseUserUtils.setAppUserAvatar(StartLiveActivity.this,EMClient.getInstance().getCurrentUser(),userAvatar);
         EaseUserUtils.setAppUserNick(EMClient.getInstance().getCurrentUser(),usernameView);
         tvShowTime.setText(showTime);
         closeConfirmBtn.setOnClickListener(new View.OnClickListener() {
