@@ -189,18 +189,20 @@
       android:layout_alignParentBottom="true"
       ></RelativeLayout>
 
-  <ImageView
-      android:id="@+id/cover_image"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:visibility="invisible"
-      android:scaleType="fitXY"
-      />
-
   <ViewStub
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:id="@+id/finish_frame"
       android:layout="@layout/live_finish_layout"
       />
+
+  <ImageView
+      android:id="@+id/cover_image"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="invisible"
+      android:scaleType="fitXY"
+      android:layout_alignParentTop="true"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentStart="true" />
 </RelativeLayout>
