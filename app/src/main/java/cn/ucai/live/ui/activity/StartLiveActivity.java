@@ -118,11 +118,11 @@ public class StartLiveActivity extends LiveBaseActivity
         EaseUserUtils.setAppUserAvatar(this,EMClient.getInstance().getCurrentUser(),userAvatar);
         EaseUserUtils.setAppUserNick(EMClient.getInstance().getCurrentUser(),usernameView);
 
-        String id = getIntent().getStringExtra("liveId");
-        if (id != null && !liveId.equals("")) {
-            L.e(TAG, "getIntent,id=" + id);
-            liveId = id;
-            chatroomId = id;
+        LiveRoom liveRoom = getIntent().getParcelableExtra("liveRoom");
+        if (liveRoom.getId() != null && !liveRoom.getId().equals("")) {
+            L.e(TAG,"getIntent,liveId="+liveRoom.getId()+",chatroomId="+liveRoom.getChatroomId());
+            liveId = liveRoom.getId();
+            chatroomId = liveRoom.getChatroomId();
         } else {
             liveId=EMClient.getInstance().getCurrentUser();
 
@@ -334,8 +334,8 @@ public class StartLiveActivity extends LiveBaseActivity
     private void showConfirmCloseLayout() {
         //显示封面
         coverImage.setVisibility(View.VISIBLE);
-        List<LiveRoom> liveRoomList = TestDataRepository.getLiveRoomList();
-        EaseUserUtils.setAppUserAvatar(this,EMClient.getInstance().getCurrentUser(),coverImage);
+//        EaseUserUtils.setAppUserAvatar(this,EMClient.getInstance().getCurrentUser(),coverImage);
+//        List<LiveRoom> liveRoomList = TestDataRepository.getLiveRoomList();
 //        for (LiveRoom liveRoom : liveRoomList) {
 //            if (liveRoom.getId().equals(liveId)) {
 //                coverImage.setImageResource(liveRoom.getCover());

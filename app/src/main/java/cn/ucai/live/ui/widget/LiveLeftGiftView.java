@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import cn.ucai.live.R;
+
+import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 
 import butterknife.BindView;
@@ -51,8 +54,9 @@ public class LiveLeftGiftView extends RelativeLayout {
         this.name.setText(name);
     }
 
-    public void setAvatar(String avatar){
-        Glide.with(getContext()).load(avatar).into(this.avatar);
+    public void setAvatar(String username){
+        EaseUserUtils.setAppUserAvatar(getContext(),username,this.avatar);
+//        Glide.with(getContext()).load(avatar).into(this.avatar);
     }
 
     public ImageView getGiftImageView(){
