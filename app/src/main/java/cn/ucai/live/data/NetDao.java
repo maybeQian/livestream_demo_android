@@ -94,4 +94,13 @@ public class NetDao {
                 .execute(listener);
     }
 
+    public static void removeLive(Context context, String chatRoomId, OnCompleteListener<String> listener) {
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_REMOVE_LIVE)
+                .addParam("auth","1IFgE")
+                .addParam("chatRoomId",chatRoomId)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+
 }

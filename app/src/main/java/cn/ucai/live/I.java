@@ -219,6 +219,7 @@ public interface I {
 	String REQUEST_RECHARGE                         =       "live/recharge";
 	String REQUEST_GET_ALL_CHATROOM                 =       "live/getAllChatRoom";
 	String REQUEST_CREATE_LIVE                      =       "live/createChatRoom";
+	String REQUEST_REMOVE_LIVE                      =       "live/deleteChatRoom";
 
 	int REQUESTCODE_PICK = 1;
 	int REQUESTCODE_CUTTING = 2;

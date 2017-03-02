@@ -120,10 +120,8 @@ public class StartLiveActivity extends LiveBaseActivity
             liveId = id;
             chatroomId = id;
         } else {
-            pd = new ProgressDialog(this);
-            pd.setMessage("开始直播...");
-            pd.show();
-            createLiveRoom();
+            liveId=EMClient.getInstance().getCurrentUser();
+
         }
 //        liveId = TestDataRepository.getLiveRoomId(EMClient.getInstance().getCurrentUser());
 //        chatroomId = TestDataRepository.getChatRoomId(EMClient.getInstance().getCurrentUser());
@@ -214,12 +212,14 @@ public class StartLiveActivity extends LiveBaseActivity
      */
     @OnClick(R.id.btn_start)
     void startLive() {
-        if (liveId == null || liveId.equals("")) {
-            CommonUtils.showShortToast("获取直播数据失败");
-            L.e(TAG,"id is null");
-            return;
+        if (chatroomId == null || chatroomId.equals("")) {
+            pd = new ProgressDialog(this);
+            pd.setMessage("创建直播...");
+            pd.show();
+            createLiveRoom();
+        } else {
+            startLiveByChatRoom();
         }
-        startLiveByChatRoom();
     }
 
     private void createLiveRoom() {
@@ -236,8 +236,8 @@ public class StartLiveActivity extends LiveBaseActivity
                         if (id != null) {
                             success=true;
                             L.e("startLive","id="+id);
-                            initLive(id);
-//                            startLiveByChatRoom();
+                            chatroomId=id;
+                            startLiveByChatRoom();
                         }
 
                     }
@@ -280,11 +280,7 @@ public class StartLiveActivity extends LiveBaseActivity
         }.start();
     }
 
-    private void initLive(String id) {
-        liveId = id;
-        chatroomId = id;
-        initEnv();
-    }
+
 
     /**
      * 关闭直播显示直播成果
@@ -296,7 +292,22 @@ public class StartLiveActivity extends LiveBaseActivity
             finish();
             return;
         }
+        removeLive();
         showConfirmCloseLayout();
+    }
+
+    private void removeLive() {
+        NetDao.removeLive(this, chatroomId, new OnCompleteListener<String>() {
+            @Override
+            public void onSuccess(String result) {
+                L.e(TAG,"removeLive,result="+result);
+            }
+
+            @Override
+            public void onError(String error) {
+                L.e(TAG,"removeLive,error="+error);
+            }
+        });
     }
 
     @OnClick(R.id.img_bt_switch_voice)
