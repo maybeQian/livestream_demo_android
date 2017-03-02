@@ -32,7 +32,7 @@ public class TestDataRepository {
       liveRoom.setAudienceNum(new Random().nextInt(2000) + 1);
       liveRoom.setId(liveRoomIds[i-1]);
       liveRoom.setChatroomId(chatRoomIds[i-1]);
-      liveRoom.setCover(covers[i - 1]);
+      liveRoom.setCover("");
       liveRoom.setAnchorId(anchorIds[i-1]);
       roomList.add(liveRoom);
     }
