@@ -120,6 +120,8 @@ public class LiveListFragment extends Fragment {
                 msrl.setRefreshing(true);
                 mtvRefreshHint.setVisibility(View.VISIBLE);
                 cursor=null;
+                isFirstLoading=true;
+                chatRoomList.clear();
                 loadAndShowData();
             }
         });
@@ -218,7 +220,7 @@ public class LiveListFragment extends Fragment {
                                     hasMoreData = false;
                                     footLoadingLayout.setVisibility(View.VISIBLE);
                                     footLoadingPB.setVisibility(View.GONE);
-                                    footLoadingText.setText("No more data");
+                                    footLoadingText.setText("没有更多数据了");
                                 }
                                 adapter.notifyDataSetChanged();
                             }
