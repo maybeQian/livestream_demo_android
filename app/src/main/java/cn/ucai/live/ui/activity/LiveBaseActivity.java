@@ -501,11 +501,8 @@ public abstract class LiveBaseActivity extends BaseActivity {
           showUserDetailsDialog(namelist.get(position));
         }
       });
-      //暂时使用测试数据
-      Glide.with(context)
-          .load(avatarRepository.getAvatar())
-          .placeholder(R.drawable.ease_default_avatar)
-          .into(holder.Avatar);
+      EaseUserUtils.setAppUserAvatar(context,namelist.get(position),holder.Avatar);
+
     }
 
     @Override public int getItemCount() {
