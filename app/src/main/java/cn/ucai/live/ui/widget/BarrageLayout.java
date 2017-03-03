@@ -16,6 +16,8 @@ import cn.ucai.live.R;
 import com.github.florent37.viewanimator.AnimationBuilder;
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
+import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.easeui.widget.EaseImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,20 +81,22 @@ public class BarrageLayout extends LinearLayout {
 
     }
 
-    public synchronized void addBarrage(String msgContent, String username) {
+    public synchronized void addBarrage(String msgContent, String username,String usernick) {
         int i = count % 2;
         Message message = handler.obtainMessage();
         message.what = i;
-        message.obj = newBarrageView(msgContent, username);
+        message.obj = newBarrageView(msgContent, username,usernick);
         handler.sendMessage(message);
         count++;
     }
 
-    private View newBarrageView(String msgContent, String username){
+    private View newBarrageView(String msgContent, String username,String usernick){
         View barrageView = LayoutInflater.from(getContext()).inflate(R.layout.layout_barrage_show, null);
+        EaseImageView userAvatar = (EaseImageView) barrageView.findViewById(R.id.avatar);
         TextView nameView = (TextView) barrageView.findViewById(R.id.name);
         TextView contentView = (TextView) barrageView.findViewById(R.id.content);
-        nameView.setText(username);
+        EaseUserUtils.setAppUserAvatar(getContext(),username,userAvatar);
+        nameView.setText(usernick);
         contentView.setText(msgContent);
         return barrageView;
     }
