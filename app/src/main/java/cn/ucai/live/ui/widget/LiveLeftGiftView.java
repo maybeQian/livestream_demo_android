@@ -8,15 +8,14 @@ import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import cn.ucai.live.R;
-
-import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.ucai.live.LiveHelper;
+import cn.ucai.live.R;
+import cn.ucai.live.data.model.Gift;
 
 /**
  * Created by wei on 2016/6/7.
@@ -29,6 +28,8 @@ public class LiveLeftGiftView extends RelativeLayout {
     TextView name;
     @BindView(R.id.gift_image)
     ImageView giftImage;
+    @BindView(R.id.gift_name)
+    TextView giftName;
 
     public LiveLeftGiftView(Context context) {
         super(context);
@@ -50,16 +51,27 @@ public class LiveLeftGiftView extends RelativeLayout {
         ButterKnife.bind(this);
     }
 
-    public void setName(String name){
+    public void setName(String name) {
         this.name.setText(name);
     }
 
-    public void setAvatar(String username){
-        EaseUserUtils.setAppUserAvatar(getContext(),username,this.avatar);
+    public void setAvatar(String username) {
+        EaseUserUtils.setAppUserAvatar(getContext(), username, this.avatar);
 //        Glide.with(getContext()).load(avatar).into(this.avatar);
     }
 
-    public ImageView getGiftImageView(){
+    public ImageView getGiftImageView() {
         return giftImage;
+    }
+
+    public void setGift(int giftId) {
+        if (giftId == 0) {
+            giftName.setText("送了一个校园之星");
+            giftImage.setImageResource(R.drawable.gift_star);
+        } else {
+            Gift gift = LiveHelper.getInstance().getAppGiftList().get(giftId);
+            giftName.setText("送了一个"+gift.getGname());
+            EaseUserUtils.setGiftAvatarByPath(getContext(),gift.getGurl(),giftImage);
+        }
     }
 }

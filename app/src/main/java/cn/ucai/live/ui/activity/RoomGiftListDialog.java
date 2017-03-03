@@ -21,6 +21,8 @@ import android.widget.TextView;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -83,13 +85,21 @@ public class RoomGiftListDialog extends DialogFragment {
             Map.Entry<Integer, Gift> next = iterator.next();
             giftlist.add(next.getValue());
         }
+
+        Collections.sort(giftlist, new Comparator<Gift>() {
+            @Override
+            public int compare(Gift lhs, Gift rhs) {
+                return lhs.getId().compareTo(rhs.getId());
+            }
+        });
+        adapter.notifyDataSetChanged();
     }
 
 
-    private UserDetailsDialogListener dialogListener;
+    private View.OnClickListener listener;
 
-    public void setUserDetailsDialogListener(UserDetailsDialogListener dialogListener) {
-        this.dialogListener = dialogListener;
+    public void setGiftOnClickListener(View.OnClickListener listener) {
+        this.listener = listener;
     }
 
     interface UserDetailsDialogListener {
@@ -122,6 +132,7 @@ public class RoomGiftListDialog extends DialogFragment {
             holder.tvGiftPrice.setText(String.valueOf(gift.getGprice()));
             EaseUserUtils.setGiftAvatarByPath(context,gift.getGurl(),holder.ivGift);
             holder.itemView.setTag(gift.getId());
+            holder.itemView.setOnClickListener(listener);
         }
 
         @Override
