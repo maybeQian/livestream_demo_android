@@ -191,8 +191,11 @@ public class LiveHelper {
                             for (Gift gift : list) {
                                 map.put(gift.getId(), gift);
                             }
-                            LiveHelper.getInstance().setAppGiftList(map);
-                            userDao.saveAppGiftList(list);
+                            getAppGiftList().clear();
+                            getAppGiftList().putAll(map);
+
+                            UserDao dao = new UserDao(appContext);
+                            dao.saveAppGiftList(list);
                         }
                     }
                 }

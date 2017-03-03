@@ -27,4 +27,8 @@
   <color name="common_btn_black_pressed">#111010</color>
   <color name="common_btn_blue_normal">#24AAFF</color>
   <color name="common_btn_blue_pressed">#1887cd</color>
+
+  <color name="transparent" >#00000000</color>
+  <color name="text_color_hint">#DDDDDD</color>
+  <color name="red">#f00</color>
 </resources>

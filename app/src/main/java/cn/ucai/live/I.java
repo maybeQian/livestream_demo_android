@@ -224,6 +224,7 @@ public interface I {
 	int REQUESTCODE_PICK = 1;
 	int REQUESTCODE_CUTTING = 2;
 	int REQUESTCODE_MEMORY=3;
+	int GIFT_COLUMN_COUNT=4;
 }
 
 
